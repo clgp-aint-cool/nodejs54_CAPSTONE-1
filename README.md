@@ -14,7 +14,6 @@ Backend  (Node.js + Express + Prisma) kết nối MySQL/MariaDB, cung cấp đ�
 │   ├── src/
 │   ├── prisma/
 │   ├── uploads/
-│   ├── documentation/
 │   └── server.js
 ├── frontend/         # React + TypeScript + Vite
 │   ├── src/
@@ -27,11 +26,10 @@ Backend  (Node.js + Express + Prisma) kết nối MySQL/MariaDB, cung cấp đ�
 └── README.md
 ```
 
-Backend sẽ chạy tại: **http://localhost:3069**
-API Docs: **http://localhost:3069/api-docs**
+API Docs: **nodejs54capstone-1-production.up.railway.app/api-docs**
 
-
-Frontend sẽ chạy tại: **http://localhost:3000** (hoặc port được Vite chọn)
+### Postman Collection
+Cáptone API.postman_collection.json
 
 
 ### Authentication
@@ -105,7 +103,7 @@ Frontend sẽ chạy tại: **http://localhost:3000** (hoặc port được Vite
 - JWT Authentication
 - Multer (file upload)
 - Swagger UI
-- WebSocket (ws)
+
 
 ### Frontend
 - React 18
@@ -147,9 +145,7 @@ Frontend sẽ chạy tại: **http://localhost:3000** (hoặc port được Vite
 - ngay_luu, created_at, updated_at
 
 
-### Postman Collection
 
-Import: `backend/documentation/Image_Gallery_API_Postman_Collection.json`
 
 
 
