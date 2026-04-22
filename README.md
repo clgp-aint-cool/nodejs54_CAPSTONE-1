@@ -5,7 +5,6 @@ Backend  (Node.js + Express + Prisma) kết nối MySQL/MariaDB, cung cấp đ�
 - **Frontend**: Vercel (React + Vite). Cần set `VITE_API_URL` trỏ đến Railway backend.
 - **Backend**: Railway (Node.js). Cần set `DATABASE_URL` (MySQL connection từ Railway Database), `JWT_SECRET`, `CORS_ORIGIN` (domain Vercel). Railway gắn thêm thư mục `uploads` .
 
-**API Docs:** `/api-docs` (Swagger UI)
 
 ## Project Structure
 
