@@ -1,11 +1,16 @@
-# Image Gallery - Fullstack Application
 
-Ứng dụng quản lý ảnh hoàn chỉnh với Node.js/Express backend và React TypeScript frontend.
+Backend  (Node.js + Express + Prisma) kết nối MySQL/MariaDB, cung cấp đầy đủ tính năng quản lý ảnh: đăng ký/đăng nhập, upload ảnh, bình luận, lưu ảnh yêu thích.
+
+**Deployment:**
+- **Frontend**: Vercel (React + Vite). Cần set `VITE_API_URL` trỏ đến Railway backend.
+- **Backend**: Railway (Node.js). Cần set `DATABASE_URL` (MySQL connection từ Railway Database), `JWT_SECRET`, `CORS_ORIGIN` (domain Vercel). Railway gắn thêm thư mục `uploads` .
+
+**API Docs:** `/api-docs` (Swagger UI)
 
 ## Project Structure
 
 ```
-├── backend/          # Express.js API server
+├── backend/          # Express.js 
 │   ├── src/
 │   ├── prisma/
 │   ├── uploads/
@@ -22,63 +27,12 @@
 └── README.md
 ```
 
-## Quick Start
-
-### 1. Backend Setup
-
-```bash
-cd backend
-
-# Install dependencies
-npm install
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your database URL
-
-# Generate Prisma client
-npm run prisma:generate
-
-# Push schema to database
-npm run prisma:push
-
-# (Optional) Seed database with demo data
-npm run prisma:seed
-
-# Start development server
-npm run dev
-```
-
 Backend sẽ chạy tại: **http://localhost:3069**
 API Docs: **http://localhost:3069/api-docs**
 
-### 2. Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Configure environment (optional)
-cp .env.example .env
-# Edit VITE_API_URL if backend runs on different port
-
-# Start development server
-npm run dev
-```
 
 Frontend sẽ chạy tại: **http://localhost:3000** (hoặc port được Vite chọn)
 
-### 3. Demo Credentials
-
-Nếu chạy seed:
-```
-Email: demo@example.com
-Password: demo123
-```
-
-## Features
 
 ### Authentication
 - User registration with email, password, name, age
@@ -192,64 +146,10 @@ Password: demo123
 - Composite PK: (nguoi_dung_id, hinh_id)
 - ngay_luu, created_at, updated_at
 
-## Testing
-
-### Manual Testing with cURL
-
-```bash
-# Register
-curl -X POST http://localhost:3069/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@test.com","password":"test123","ho_ten":"Test User","tuoi":25}'
-
-# Login
-curl -X POST http://localhost:3069/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@test.com","password":"test123"}'
-
-# Upload image (replace TOKEN with JWT)
-curl -X POST http://localhost:3069/api/images \
-  -H "Authorization: Bearer TOKEN" \
-  -F "image=@/path/to/image.jpg" \
-  -F "ten_hinh=My Photo" \
-  -F "mo_ta=Description"
-```
 
 ### Postman Collection
 
 Import: `backend/documentation/Image_Gallery_API_Postman_Collection.json`
 
-## Troubleshooting
 
-**CORS Errors**: Ensure backend CORS is configured for your frontend URL
 
-**Upload Fails**: Check file size (< 5MB) and type (JPEG, PNG, GIF, WebP)
-
-**401 Unauthorized**: Token expired or not sent. Login again.
-
-**Database Connection**: Verify MySQL is running and DATABASE_URL is correct
-
-## Development Notes
-
-- Backend uses ES Modules (`type: "module"` in package.json)
-- Prisma 7.x with new config format (prisma.config.ts)
-- Images stored in `backend/uploads/` folder
-- JWT secret should be changed in production
-- All timestamps are UTC
-
-## Future Enhancements
-
-- [ ] Google OAuth login
-- [ ] Image compression/resizing
-- [ ] Cloud storage (S3/Cloudinary)
-- [ ] Real-time notifications via WebSocket
-- [ ] Like system
-- [ ] Categories/tags
-- [ ] Follow system
-- [ ] Infinite scroll
-- [ ] Image editing
-- [ ] Email notifications
-
-## License
-
-ISC
