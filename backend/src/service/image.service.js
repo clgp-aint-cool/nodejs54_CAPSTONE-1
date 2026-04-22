@@ -5,11 +5,11 @@ export const imageService = {
     const skip = (page - 1) * limit;
     const where = search
       ? {
-          OR: [
-            { ten_hinh: { contains: search, mode: 'insensitive' } },
-            { mo_ta: { contains: search, mode: 'insensitive' } }
-          ]
-        }
+        OR: [
+          { ten_hinh: { contains: search } },
+          { mo_ta: { contains: search } }
+        ]
+      }
       : {};
 
     const images = await prisma.hinh_anh.findMany({

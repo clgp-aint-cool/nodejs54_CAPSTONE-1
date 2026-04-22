@@ -33,12 +33,12 @@ export const ImageDetail = () => {
         imageService.getById(imageId),
         commentService.getByImageId(imageId),
       ]);
-      setImage(imageRes.data.image);
-      setComments(commentsRes.data.comments);
+      setImage(imageRes.image);
+      setComments(commentsRes.comments);
 
       if (user) {
         const savedRes = await savedService.checkSaved(imageId);
-        setIsSaved(savedRes.data.saved);
+        setIsSaved(savedRes.saved);
       }
     } catch (error) {
       console.error('Failed to fetch image:', error);
@@ -81,7 +81,7 @@ export const ImageDetail = () => {
     setSubmittingComment(true);
     try {
       const res = await commentService.add(parseInt(id!), commentText.trim());
-      setComments([res.data.comment, ...comments]);
+      setComments([res.comment, ...comments]);
       setCommentText('');
     } catch (error) {
       console.error('Failed to add comment:', error);

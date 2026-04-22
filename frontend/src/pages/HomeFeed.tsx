@@ -18,7 +18,7 @@ export const HomeFeed = () => {
     setLoading(true);
     try {
       const response = await imageService.getAll(1, 50, searchTerm);
-      setImages(response.data.images || []);
+      setImages(response.images || []);
     } catch (error) {
       console.error('Failed to fetch images:', error);
     } finally {

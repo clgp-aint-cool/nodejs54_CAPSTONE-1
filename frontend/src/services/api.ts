@@ -95,12 +95,12 @@ export const imageService = {
       ...(search && { search }),
     });
     const { data } = await api.get(`/images?${params}`);
-    return data;
+    return data.data;
   },
 
   getById: async (imageId: number): Promise<{ image: Image }> => {
     const { data } = await api.get(`/images/${imageId}`);
-    return data;
+    return data.data;
   },
 
   upload: async (formData: FormData): Promise<{ image: Image }> => {
@@ -109,7 +109,7 @@ export const imageService = {
         'Content-Type': 'multipart/form-data',
       },
     });
-    return data;
+    return data.data;
   },
 
   delete: async (imageId: number): Promise<void> => {
@@ -143,7 +143,7 @@ export const userService = {
       limit: limit.toString(),
     });
     const { data } = await api.get(`/users/images/created?${params}`);
-    return data;
+    return data.data;
   },
 
   getSavedImages: async (
@@ -155,7 +155,7 @@ export const userService = {
       limit: limit.toString(),
     });
     const { data } = await api.get(`/users/images/saved?${params}`);
-    return data;
+    return data.data;
   },
 };
 
@@ -164,14 +164,14 @@ export const userService = {
 export const commentService = {
   getByImageId: async (imageId: number): Promise<{ comments: Comment[] }> => {
     const { data } = await api.get(`/comments/image/${imageId}`);
-    return data;
+    return data.data;
   },
 
   add: async (imageId: number, noi_dung: string): Promise<{ comment: Comment }> => {
     const { data } = await api.post(`/comments/image/${imageId}`, {
       noi_dung,
     });
-    return data;
+    return data.data;
   },
 
   delete: async (commentId: number): Promise<void> => {
@@ -184,17 +184,17 @@ export const commentService = {
 export const savedService = {
   checkSaved: async (imageId: number): Promise<{ saved: boolean }> => {
     const { data } = await api.get(`/saved/check/${imageId}`);
-    return data;
+    return data.data;
   },
 
   save: async (imageId: number): Promise<{ saved: boolean; message: string }> => {
     const { data } = await api.post(`/saved/${imageId}`);
-    return data;
+    return data.data;
   },
 
   unsave: async (imageId: number): Promise<{ saved: boolean; message: string }> => {
     const { data } = await api.delete(`/saved/${imageId}`);
-    return data;
+    return data.data;
   },
 
   getAll: async (
@@ -206,7 +206,7 @@ export const savedService = {
       limit: limit.toString(),
     });
     const { data } = await api.get(`/saved?${params}`);
-    return data;
+    return data.data;
   },
 };
 

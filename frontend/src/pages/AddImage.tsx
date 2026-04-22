@@ -80,7 +80,7 @@ export const AddImage = () => {
       }
 
       const response = await imageService.upload(formData);
-      navigate(`/image/${response.data.image.hinh_id}`);
+      navigate(`/image/${response.image.hinh_id}`);
     } catch (error) {
       const err = error as { response?: { data?: { message: string } } };
       setError(

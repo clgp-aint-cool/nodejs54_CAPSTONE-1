@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
-import { Avatar } from '../components/ui/Avatar';
 import { Icons } from '../components/ui/Icon';
-import { userService, getImageUrl } from '../services/api';
+import { userService, imageService, getImageUrl } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import type { Image } from '../types/index';
 
@@ -21,24 +20,17 @@ export const UserProfile = () => {
     total: 0,
   });
 
-  useEffect(() => {
-    if (!currentUser) {
-      navigate('/login');
-      return;
-    }
-    fetchImages(1, activeTab);
-  }, [activeTab, currentUser]);
-
   const fetchImages = async (page: number, tab: TabType) => {
     setLoading(true);
     try {
-      const service =
-        tab === 'created'
-          ? userService.getCreatedImages
-          : userService.getSavedImages;
-      const response = await service(page, 20);
-      setImages(response.data.images);
-      setPagination(response.data.pagination);
+      let response;
+      if (tab === 'created') {
+        response = await userService.getCreatedImages(page, 20);
+      } else {
+        response = await userService.getSavedImages(page, 20);
+      }
+      setImages(response.images);
+      setPagination(response.pagination);
     } catch (error) {
       console.error('Failed to fetch images:', error);
     } finally {
@@ -46,8 +38,29 @@ export const UserProfile = () => {
     }
   };
 
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/login');
+      return;
+    }
+    fetchImages(1, activeTab);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, currentUser?.nguoi_dung_id]);
+
   const handlePageChange = (newPage: number) => {
     fetchImages(newPage, activeTab);
+  };
+
+  const handleDelete = async (e: React.MouseEvent, imageId: number) => {
+    e.stopPropagation();
+    if (!window.confirm('Are you sure you want to delete this image?')) return;
+    try {
+      await imageService.delete(imageId);
+      setImages((prev) => prev.filter((img) => img.hinh_id !== imageId));
+    } catch (error) {
+      console.error('Failed to delete image:', error);
+      alert('Failed to delete image. Please try again.');
+    }
   };
 
   if (!currentUser) {
@@ -171,20 +184,15 @@ export const UserProfile = () => {
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
                       <div className="flex gap-2">
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          className="bg-white text-gray-900 hover:bg-gray-100"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Edit
-                        </Button>
-                        <button
-                          className="p-2 bg-white rounded-full hover:bg-gray-100"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Icons.MoreHorizontal className="w-5 h-5 text-gray-900" />
-                        </button>
+                        {activeTab === 'created' && (
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={(e) => handleDelete(e, image.hinh_id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -45,9 +45,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const register = async (email: string, password: string, ho_ten: string, tuoi?: number) => {
-    const response = await authService.register(email, password, ho_ten, tuoi);
-    // Registration only returns user, no token. Must login after register or just set user.
-    // For now we'll just log them in automatically by calling login right after.
+    await authService.register(email, password, ho_ten, tuoi);
     await login(email, password);
   };
 

@@ -14,7 +14,6 @@ export const EditProfile = () => {
   const [age, setAge] = useState('');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string>('');
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -60,7 +59,7 @@ export const EditProfile = () => {
       }
 
       if (!hasChanges) {
-        setMessage({ type: 'info', text: 'No changes to save' });
+        setMessage({ type: 'error', text: 'No changes to save' });
         setSaving(false);
         return;
       }
